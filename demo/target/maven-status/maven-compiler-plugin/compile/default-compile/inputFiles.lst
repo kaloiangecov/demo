@@ -1,0 +1,14 @@
+/home/kaloyan/Projects/demo/src/main/java/com/example/controller/UserController.java
+/home/kaloyan/Projects/demo/src/main/java/com/example/exceptions/SuperSpecialSuperAwesomeMasterException.java
+/home/kaloyan/Projects/demo/src/main/java/com/example/controller/GlobalExceptionHandlerMethods.java
+/home/kaloyan/Projects/demo/src/main/java/com/example/ServletInitializer.java
+/home/kaloyan/Projects/demo/src/main/java/com/example/exceptions/IncorrectInputException.java
+/home/kaloyan/Projects/demo/src/main/java/com/example/exceptions/UserNotFoundException.java
+/home/kaloyan/Projects/demo/src/main/java/com/example/customannotations/LetterOnlyValidation.java
+/home/kaloyan/Projects/demo/src/main/java/com/example/customannotations/LettersOnlyValidator.java
+/home/kaloyan/Projects/demo/src/main/java/com/example/exceptions/SortTypeNotFoundException.java
+/home/kaloyan/Projects/demo/src/main/java/com/example/repository/ErrorResponse.java
+/home/kaloyan/Projects/demo/src/main/java/com/example/service/UserService.java
+/home/kaloyan/Projects/demo/src/main/java/com/example/UserDao/UserRepository.java
+/home/kaloyan/Projects/demo/src/main/java/com/example/DemoApplication.java
+/home/kaloyan/Projects/demo/src/main/java/com/example/repository/User.java
