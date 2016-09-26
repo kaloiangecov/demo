@@ -5,11 +5,14 @@
  */
 package com.example.service;
 
-import com.example.UserDao.UserRepository;
+import com.example.repository.UserRepository;
 import com.example.exceptions.IncorrectInputException;
 import com.example.exceptions.SuperSpecialSuperAwesomeMasterException;
 import com.example.exceptions.UserNotFoundException;
-import com.example.repository.User;
+import com.example.model.RolePermission;
+import com.example.model.UserBean;
+import com.example.model.UserRole;
+import com.example.repository.UserRoleRepository;
 import java.util.List;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
@@ -26,47 +29,60 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserRoleRepository userRoleRepository;
 
-    public List<User> getAllUsers() {
+    public List<UserBean> getAllUsers() {
         return userRepository.findAll();
     }
 
-    public User insertUser(User user) throws SuperSpecialSuperAwesomeMasterException{
-        try{
-                return userRepository.save(user);               
-            }catch (ConstraintViolationException e){
-                
-                Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
-                
-                StringBuilder message = new StringBuilder();
-                message.append("There has been incorrect input for the following fields: ");
-                
-                for (ConstraintViolation violation : violations) {
-                    message.append(violation.getPropertyPath().toString()).append("; ");
-                }
-                
-                throw new IncorrectInputException(message.toString(), "180");
+    public UserBean insertUser(UserBean user) throws SuperSpecialSuperAwesomeMasterException {
+        try {
+            user.setUserRole(userRoleRepository.findOne(1L));
+            userRepository.save(user);
+            UserRole userRole = userRoleRepository.findOne(1L);
+            userRole.getUsers().add(user);
+            userRoleRepository.save(userRole);
+
+            return user;
+        } catch (ConstraintViolationException e) {
+
+            Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+
+            StringBuilder message = new StringBuilder();
+            message.append("There has been incorrect input for the following fields: ");
+
+            for (ConstraintViolation violation : violations) {
+                message.append(violation.getPropertyPath().toString()).append("; ");
             }
+
+            throw new IncorrectInputException(message.toString(), "180");
+        }
     }
 
-    public List<User> getAllUsersByLastName() {
+    public List<UserBean> getAllUsersByLastName() {
         return userRepository.findAllByOrderByLastNameAsc();
     }
 
-    public List<User> getAllUsersByDateOfBirth() {
+    public List<UserBean> getAllUsersByDateOfBirth() {
         return userRepository.findAllByOrderByBirthDateAsc();
     }
 
-    public User getUserById(Long id) throws SuperSpecialSuperAwesomeMasterException{
-        User user = userRepository.findOne(id);
-        if(user == null){
+    public UserBean getUserById(Long id) throws SuperSpecialSuperAwesomeMasterException {
+        UserBean user = userRepository.findOne(id);
+        if (user == null) {
             throw new UserNotFoundException("there is no user with id: " + id, "113");
+        }
+
+        System.out.println(user.getUserRole().getRoleName());
+        for (RolePermission permission : user.getUserRole().getRolePermissions()) {
+            System.out.println(permission.getName());
         }
         return user;
     }
 
-    public User removeUser(Long id) throws SuperSpecialSuperAwesomeMasterException {
-        User user = userRepository.findOne(id);
+    public UserBean removeUser(Long id) throws SuperSpecialSuperAwesomeMasterException {
+        UserBean user = userRepository.findOne(id);
         if (user != null) {
             userRepository.delete(id);
         } else {
@@ -76,31 +92,36 @@ public class UserService {
 
     }
 
-    public User updateUser(User user, Long id) throws SuperSpecialSuperAwesomeMasterException{
-        User u = userRepository.findOne(id);
-        if(u != null){
+    public UserBean updateUser(UserBean user, Long id) throws SuperSpecialSuperAwesomeMasterException {
+        UserBean u = userRepository.findOne(id);
+        if (u != null) {
+            
             u.setBirthDate(user.getBirthDate());
             u.setEmail(user.getEmail());
             u.setFirstName(user.getFirstName());
             u.setLastName(user.getLastName());
             u.setPhone(user.getPhone());
-            try{
-                return userRepository.save(u);               
-            }catch (ConstraintViolationException e){
-                
+            u.setUsername(user.getUsername());
+            u.setPassword(user.getPassword());
+            u.setUserRole(user.getUserRole());
+            try {
+                return userRepository.save(u);
+            } catch (ConstraintViolationException e) {
+
                 Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
-                
+
                 StringBuilder message = new StringBuilder();
                 message.append("There has been incorrect input for the following fields: ");
-                
+
                 for (ConstraintViolation violation : violations) {
                     message.append(violation.getPropertyPath().toString()).append("; ");
                 }
-                
+
                 throw new IncorrectInputException(message.toString(), "180");
             }
-        }else {
+        } else {
             throw new UserNotFoundException("Cannot update user with id: " + id, "111");
         }
     }
+
 }
