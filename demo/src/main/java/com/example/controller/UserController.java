@@ -7,12 +7,16 @@ package com.example.controller;
 
 import com.example.exceptions.SortTypeNotFoundException;
 import com.example.exceptions.SuperSpecialSuperAwesomeMasterException;
-import com.example.repository.User;
+import com.example.repository.ErrorResponse;
+import com.example.model.UserBean;
 import com.example.service.UserService;
+import java.lang.annotation.Annotation;
+import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,14 +33,16 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
+    
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public @ResponseBody List<User> getAllUsers() {
+    @PreAuthorize("hasRole('PERM_VIEW_USER')")
+    public @ResponseBody List<UserBean> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @RequestMapping(value = "/user/sort/{sortType}", method = RequestMethod.GET)
-    public @ResponseBody List<User> getAllUsersBySort(@PathVariable("sortType") String sortType) throws SortTypeNotFoundException {
+    @PreAuthorize("hasRole('PERM_VIEW_USER')")
+    public @ResponseBody List<UserBean> getAllUsersBySort(@PathVariable("sortType") String sortType) throws SortTypeNotFoundException {
         
         if (sortType.equals("LN")) {
             return userService.getAllUsersByLastName();
@@ -49,22 +55,27 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-    public @ResponseBody User getUserByid(@PathVariable Long id) throws SuperSpecialSuperAwesomeMasterException{
+    @PreAuthorize("hasRole('PERM_VIEW_USER')")
+    public @ResponseBody UserBean getUserByid(@PathVariable Long id) throws SuperSpecialSuperAwesomeMasterException{
         return userService.getUserById(id);
     }
 
     @RequestMapping(value = "/user/remove/{id}", method = RequestMethod.DELETE)
-    public @ResponseBody User deleteUser(@PathVariable("id") Long id) throws SuperSpecialSuperAwesomeMasterException{
+    @PreAuthorize("hasRole('PERM_DELETE_USER')")
+    public @ResponseBody UserBean deleteUser(@PathVariable("id") Long id) throws SuperSpecialSuperAwesomeMasterException{
         return userService.removeUser(id);
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody User updateUser(@RequestBody @Valid User user,@PathVariable Long id) throws SuperSpecialSuperAwesomeMasterException{
+    @PreAuthorize("hasRole('PERM_UPDATE_USER')")
+    public @ResponseBody UserBean updateUser(@RequestBody @Valid UserBean user,@PathVariable Long id) throws SuperSpecialSuperAwesomeMasterException{
         return userService.updateUser(user, id);
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody User insertUser(@RequestBody @Valid User user) throws SuperSpecialSuperAwesomeMasterException{
+    @PreAuthorize("hasRole('PERM_ADD_USER')")
+    public @ResponseBody UserBean insertUser(@RequestBody @Valid UserBean user) throws SuperSpecialSuperAwesomeMasterException{
         return userService.insertUser(user);
     }
+
 }
