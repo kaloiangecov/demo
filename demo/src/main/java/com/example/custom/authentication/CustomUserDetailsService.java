@@ -35,7 +35,7 @@ public class CustomUserDetailsService implements UserDetailsService{
         UserBean userBean = userRepository.findByUsername(username);
         
         if(userBean == null){
-            throw new UsernameNotFoundException(username + " not found");
+            throw new UsernameNotFoundException("username: " + username + " not found");
         }
         
 //        System.out.println("............  " + userBean.getEmail() + "  ............");

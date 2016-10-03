@@ -1,7 +1,6 @@
 /home/kaloyan/Projects/demo/src/main/java/com/example/model/RolePermission.java
 /home/kaloyan/Projects/demo/src/main/java/com/example/controller/UserController.java
 /home/kaloyan/Projects/demo/src/main/java/com/example/repository/RolePermissionRepository.java
-/home/kaloyan/Projects/demo/src/main/java/com/example/service/UserServiceInterface.java
 /home/kaloyan/Projects/demo/src/main/java/com/example/security/ConsoleDatabaseConfig.java
 /home/kaloyan/Projects/demo/src/main/java/com/example/exceptions/SuperSpecialSuperAwesomeMasterException.java
 /home/kaloyan/Projects/demo/src/main/java/com/example/controller/GlobalExceptionHandlerMethods.java

@@ -7,11 +7,8 @@ package com.example.controller;
 
 import com.example.exceptions.SortTypeNotFoundException;
 import com.example.exceptions.SuperSpecialSuperAwesomeMasterException;
-import com.example.repository.ErrorResponse;
 import com.example.model.UserBean;
 import com.example.service.UserService;
-import java.lang.annotation.Annotation;
-import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,6 @@ com/example/repository/ErrorResponse.class
 com/example/security/WebConfiguration.class
 com/example/security/ConsoleDatabaseConfig.class
 com/example/exceptions/UserNotFoundException.class
-com/example/service/UserServiceInterface.class
 com/example/repository/UserRepository.class
 com/example/repository/RolePermissionRepository.class
 com/example/DemoApplication.class
