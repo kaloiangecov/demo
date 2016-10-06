@@ -5,13 +5,10 @@
  */
 package com.example.user;
 
-import com.example.thread.ThreadBean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -65,6 +62,14 @@ public class UserBean implements UserDetails {
         this.id = id;
         this.username = username;
         this.password = password;
+    }
+
+    public UserBean(String username, String password, boolean isBanned, String language, UserRole role) {
+        this.username = username;
+        this.password = password;
+        this.isBanned = isBanned;
+        this.language = language;
+        this.role = role;
     }
 
     public Long getId() {
@@ -132,6 +137,5 @@ public class UserBean implements UserDetails {
     public void setIsBanned(boolean isBanned) {
         this.isBanned = isBanned;
     }
-    
     
 }

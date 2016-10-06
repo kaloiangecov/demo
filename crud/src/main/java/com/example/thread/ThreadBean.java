@@ -50,8 +50,9 @@ public class ThreadBean {
         this.postedOn = new Date();
     }
 
-    public ThreadBean(String author, String text, UserBean userPost) {
+    public ThreadBean(String author, String title, String text, UserBean userPost) {
         this.author = author;
+        this.title = title;
         this.text = text;
         this.postedOn = new Date();
         this.userPost = userPost;

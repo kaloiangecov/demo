@@ -6,7 +6,6 @@ package com.example.comment;
  * and open the template in the editor.
  */
 
-
 import com.example.custom.exceptions.MasterException;
 import java.security.Principal;
 import java.util.List;

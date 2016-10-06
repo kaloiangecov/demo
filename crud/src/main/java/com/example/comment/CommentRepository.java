@@ -6,7 +6,6 @@ package com.example.comment;
  * and open the template in the editor.
  */
 
-
 import com.example.thread.ThreadBean;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
